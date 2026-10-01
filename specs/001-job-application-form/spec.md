@@ -243,7 +243,9 @@ detail.
   fixing before you can send this." or "A few things need fixing before you can send this.", plus
   "Check the highlighted fields below."). The count includes every invalid field, the LinkedIn
   field among them.
-- **FR-011**: Errors MUST NOT appear before the first send attempt. After the first attempt,
+- **FR-011**: Errors MUST NOT appear before the first send attempt. The one exception is the CV
+  type and size rejection (FR-004), which shows as soon as an unsuitable file is chosen. After the
+  first attempt,
   validation MUST re-run as the candidate edits, and errors MUST clear as soon as a field becomes
   valid.
 - **FR-012**: "Send application" MUST stay available to select (not disabled) so that selecting it

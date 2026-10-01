@@ -1,113 +1,148 @@
-# Implementation Plan: [FEATURE]
+# Implementation Plan: Job Application Form
 
-**Branch**: `[###-feature-name]` | **Date**: [DATE] | **Spec**: [link]
+**Branch**: `001-job-application-form` | **Date**: 2026-10-01 | **Spec**: [spec.md](./spec.md)
 
-**Input**: Feature specification from `/specs/[###-feature-name]/spec.md`
+**Input**: Feature specification from `specs/001-job-application-form/spec.md`
 
-**Note**: This template is filled in by the `/speckit-plan` command; its definition describes the execution workflow.
+This plan follows the constitution (v1.1.0) and `CLAUDE.md`, and does not repeat their standards.
+It records only the decisions specific to this feature.
 
 ## Summary
 
-[Extract from feature spec: primary requirement + technical approach from research]
+Rebuild `Design/Job Application Page.dc.html` as a browser-only Angular 22 app in `frontend/`.
+There are two lazy-loaded routes:
+
+- `/apply`: the role page and application form, covering the default, validating, submitting and
+  submit-failure states.
+- `/confirmation`: the success state. It is built from the latest saved application, so it
+  survives a reload.
+
+Form state is held in signals and checked by pure, unit-tested validators. Sent applications are
+appended to an `applications` array in `localStorage`, through `ApplicationService` and
+`StorageService`. All styling uses `--hf-*` tokens mapped from the Visual Language style sheet.
 
 ## Technical Context
 
-<!--
-  ACTION REQUIRED: Replace the content in this section with the technical details
-  for the project. The structure here is presented in advisory capacity to guide
-  the iteration process.
--->
+**Language/Version**: TypeScript (version pinned by Angular CLI 22.2), Angular 22.2, Node 24 LTS / npm 11
 
-**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]
+**Primary Dependencies**:
+- `@angular/core`, `@angular/router` (zoneless, standalone);
+- dev only: `angular-eslint` 22.x, `prettier` 3.x, `eslint-config-prettier`;
+- no UI library and no state library.
 
-**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]
+**Storage**: `localStorage`, key `applications` (JSON array). Browser-only.
 
-**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]
+**Testing**: `ng test` with the CLI's Vitest runner, for unit tests of validators, form-state
+transitions, `StorageService` and `ApplicationService`. Under the constitution's workshop
+exception there is no UI or E2E automation. Acceptance is checked by hand using
+[quickstart.md](./quickstart.md).
 
-**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]
+**Target Platform**: Evergreen desktop and mobile browsers. **No SSR, no prerender, no hydration**
+(pinned, research R1).
 
-**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
+**Project Type**: Single-page web front end (no back end)
 
-**Project Type**: [e.g., library/cli/web-service/mobile-app/compiler/desktop-app or NEEDS CLARIFICATION]
+**Performance Goals**: The form responds immediately to input and validation. The submitting state
+is shown for about 600ms (deliberate, research R7). The candidate can finish in under 2 minutes
+(SC-001).
 
-**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]
+**Constraints**:
+- `localStorage` must be available (if it is not, the submit-failure state shows);
+- works down to 360px width;
+- WCAG AA;
+- no hard-coded design values outside `tokens.css`.
 
-**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]
-
-**Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
+**Scale/Scope**: 1 role, 2 routes, about 10 components, and a few stored records per browser.
 
 ## Constitution Check
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+| Principle / standard | Status | How this plan complies |
+|---|---|---|
+| I. Design fidelity via tokens | ✅, with documented additions | [contracts/design-tokens.md](./contracts/design-tokens.md) maps every value from the style sheet. Page-only values are kept as named tokens or snapped to the grid (research R8). Departures from the design are listed in the spec's "Design deviations". Hard-coded values are checked in quickstart. |
+| II. Every designed state ships | ✅ | The five states are mapped in [data-model.md](./data-model.md) and specified in [contracts/routes-and-states.md](./contracts/routes-and-states.md). Submitting is visible because of R7, and submit failure can be reproduced on demand. |
+| III. Accessible, mobile-first, restrained | ✅ | The design's `<div>` drop zone becomes a button-based picker (R9). Errors are linked with `aria-describedby`, there are live regions, and focus is managed. The only shared UI is button, text input and card; feature-only parts stay in the feature folder. No gradients or shadows; focus rings are not shadows. |
+| IV. Standalone, signal-based Angular | ✅ | Signals and `computed` errors (R3), signal `input()`/`output()`, OnPush, built-in control flow, zoneless. No `any`. |
+| V. Acceptance criteria are DoD | ✅, with the workshop exception | Core logic is unit-tested ([contracts/services.md](./contracts/services.md)). Every acceptance criterion maps to a manual check in quickstart, with results recorded in `checklists/acceptance.md`. |
+| VI. Real content only | ✅ | Role copy comes word for word from the design. New copy is in the spec. Sample data is realistic and made up. |
+| Engineering standards: structure, naming, data access, tooling | ✅ | `frontend/`, feature-first layout, lazy routes, `hf` prefix, Angular 22 naming (R10), all storage through services, ESLint and Prettier. |
+| Brand standing instruction | ✅ | Conflicts were flagged and resolved: CV upload vs design (Clarification Q1); confirmation email line (Q2); 15px and 20px values off the scale (R8). |
+
+**Post-design re-check (after Phase 1)**: still passing. The design did not add any new shared
+component, any library, or any direct storage access. The extra items are listed under Complexity
+Tracking.
 
 ## Project Structure
 
 ### Documentation (this feature)
 
 ```text
-specs/[###-feature]/
-├── plan.md              # This file (/speckit-plan command output)
-├── research.md          # Phase 0 output (/speckit-plan command)
-├── data-model.md        # Phase 1 output (/speckit-plan command)
-├── quickstart.md        # Phase 1 output (/speckit-plan command)
-├── contracts/           # Phase 1 output (/speckit-plan command)
-└── tasks.md             # Phase 2 output (/speckit-tasks command - NOT created by /speckit-plan)
+specs/001-job-application-form/
+├── plan.md                    # This file
+├── research.md                # Phase 0: decisions R1–R10
+├── data-model.md              # Phase 1: types, validation rules, state machine
+├── quickstart.md              # Phase 1: run commands and manual acceptance checks
+├── contracts/
+│   ├── services.md            # StorageService, ApplicationService, pure functions
+│   ├── storage-schema.md      # localStorage "applications" format
+│   ├── routes-and-states.md   # routes, page composition, per-state rendering
+│   └── design-tokens.md       # --hf-* token map
+├── checklists/
+│   └── requirements.md        # spec quality checklist (acceptance.md is added during implement)
+└── tasks.md                   # Phase 2 (/speckit-tasks)
 ```
 
 ### Source Code (repository root)
-<!--
-  ACTION REQUIRED: Replace the placeholder tree below with the concrete layout
-  for this feature. Delete unused options and expand the chosen structure with
-  real paths (e.g., apps/admin, packages/something). The delivered plan must
-  not include Option labels.
--->
 
 ```text
-# [REMOVE IF UNUSED] Option 1: Single project (DEFAULT)
-src/
-├── models/
-├── services/
-├── cli/
-└── lib/
-
-tests/
-├── contract/
-├── integration/
-└── unit/
-
-# [REMOVE IF UNUSED] Option 2: Web application (when "frontend" + "backend" detected)
-backend/
-├── src/
-│   ├── models/
-│   ├── services/
-│   └── api/
-└── tests/
-
-frontend/
-├── src/
-│   ├── components/
-│   ├── pages/
-│   └── services/
-└── tests/
-
-# [REMOVE IF UNUSED] Option 3: Mobile + API (when "iOS/Android" detected)
-api/
-└── [same as backend above]
-
-ios/ or android/
-└── [platform-specific structure: feature modules, UI flows, platform tests]
+frontend/                                   # ng new frontend --ssr=false --style=css --routing --prefix=hf
+├── angular.json                            # prefix "hf"; service schematic type "service" (R10)
+├── eslint.config.js · .prettierrc · package.json (start/test/lint/format:check scripts)
+└── src/
+    ├── index.html · main.ts
+    ├── styles.css                          # imports tokens + base only
+    ├── styles/
+    │   ├── tokens.css                      # every --hf-* value (only file with design literals)
+    │   └── base.css                        # reset, body font and canvas, link colours
+    └── app/
+        ├── app.ts · app.config.ts · app.routes.ts   # shell: header, <router-outlet>, footer
+        ├── core/
+        │   ├── layout/site-header.ts · site-footer.ts
+        │   └── storage/storage.service.ts (+ .spec.ts) · storage-error.ts
+        ├── shared/ui/
+        │   ├── button/button.ts            # hf-button: primary | secondary | quiet; sm | md | lg; also styles links
+        │   ├── text-input/text-input.ts    # hf-text-input: label, hint/error slot, single or multiline, counter
+        │   └── card/card.ts                # hf-card: default | emphasis (primary border)
+        └── features/job-application/
+            ├── job-application.routes.ts   # apply, confirmation (lazy loadComponent)
+            ├── models/                     # job-role.ts · application-draft.ts · cv-file.ts ·
+            │                               # job-application.ts · application-errors.ts · form-state.ts
+            ├── data/senior-dotnet-engineer.ts
+            ├── validation/                 # application-validation.ts · form-transitions.ts (+ .spec.ts)
+            ├── services/                   # application.service.ts (+ .spec.ts) · application.tokens.ts
+            ├── guards/has-application-guard.ts
+            ├── pages/
+            │   ├── apply-page/apply-page.ts                # smart: draft signals, send/retry, navigation
+            │   └── confirmation-page/confirmation-page.ts  # smart: reads ApplicationService.latest
+            └── components/                 # presentational
+                ├── role-header/ · role-facts/ · role-description/
+                ├── application-form/ · cv-picker/ · form-alert/
+                └── confirmation-card/
 ```
 
-**Structure Decision**: [Document the selected structure and reference the real
-directories captured above]
+**Structure Decision**: One Angular app in `frontend/` (there is no back end, so it is not a
+front-end/back-end split). It is organised feature-first under
+`features/job-application/`. Shared UI is limited to the three constitution components. App-wide
+singletons (storage, shell layout) go in `core/`. Each component keeps its template and styles in
+sibling `.html` and `.css` files.
 
 ## Complexity Tracking
 
-> **Fill ONLY if Constitution Check has violations that must be justified**
-
-| Violation | Why Needed | Simpler Alternative Rejected Because |
-|-----------|------------|-------------------------------------|
-| [e.g., 4th project] | [current need] | [why 3 projects insufficient] |
-| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient] |
+| Item | Why needed | Simpler alternative rejected because |
+|---|---|---|
+| Page-level tokens not in the style sheet: 40px display title, 1.7 reading line-height, 40/56/80px layout spacing, 1.5px drop-zone border, 1040/280px layout widths | Faithful rebuild of `Job Application Page.dc` (Principle I) | Snapping these to the scale visibly changes the designed layout. They are all on the 8px grid or are intentional type choices. |
+| Literal breakpoints (420px, 900px) in component `@media` queries | CSS cannot use custom properties in media conditions | Container queries or JS breakpoints add complexity. The values are documented in the tokens contract. |
+| Artificial 600ms submit latency (injectable) | Makes the required submitting state visible (Principle II) | A synchronous save makes the state impossible to see or verify. |
+| Dev-only `?simulateFailure=once` | Makes the required submit-failure state checkable by hand | Filling storage quota by hand is unreliable for repeated checks. |
+| Snapping 15px and 20px design values to the scale | They break the type scale and the 8px grid in `Design/CLAUDE.md` | Keeping them would break the brand rules. The visual difference is 1–4px. |
