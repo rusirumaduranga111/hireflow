@@ -79,6 +79,7 @@ These are focus indicators, not drop shadows, so the "no heavy drop-shadows" rul
 | `--hf-border-width-dropzone` **page** | 1.5px (dashed) |
 | `--hf-size-control-sm` / `-md` / `-lg` | 32px / 40px / 48px (48px is the touch minimum; form controls use lg) |
 | `--hf-size-avatar` / `-lg` | 32px / 40px |
+| `--hf-size-button-min` **page** | 176px (minimum width of "Send application", design line 156) |
 | `--hf-layout-max-width` **page** | 1040px |
 | `--hf-layout-facts-width` **page** | 280px |
 | `--hf-duration-fast` | 120ms |
