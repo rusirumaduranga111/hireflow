@@ -13,7 +13,7 @@
 
 ## Requirement Completeness
 
-- [ ] No [NEEDS CLARIFICATION] markers remain (FR-004 CV field, FR-014 confirmation email copy)
+- [ ] No [NEEDS CLARIFICATION] markers remain (FR-004 CV field, FR-016 confirmation email copy)
 - [x] Requirements are testable and unambiguous
 - [x] Success criteria are measurable
 - [x] Success criteria are technology-agnostic (no implementation details)
@@ -31,7 +31,12 @@
 
 ## Notes
 
-- Iteration 1: two clarification markers remain. Both are conflicts between the design and the
-  stated non-goals, which the constitution's standing instruction says must be flagged before
-  building.
+- Iteration 1 (initial spec): two clarification markers. Both are conflicts between the design and
+  the stated non-goals.
+- Iteration 2 (Revision 1: LinkedIn URL, required cover note of at least 50 characters,
+  confirmation naming the role): requirements renumbered (FR-001 to FR-026, SC-001 to SC-009). All
+  new requirements are testable and covered by acceptance scenarios (US1 #2–3, US2 #1, #4–6, #9;
+  US4 #1). The three changes that depart from the design are recorded under "Design deviations" in
+  Assumptions. The two earlier clarification markers are still open; they are now FR-004 and
+  FR-016.
 - Items marked incomplete require spec updates before `/speckit-clarify` or `/speckit-plan`
