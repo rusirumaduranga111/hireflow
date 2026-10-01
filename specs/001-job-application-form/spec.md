@@ -15,6 +15,23 @@
 defines behaviour. Where this spec departs from the design, the departure is listed under
 **Design deviations** in Assumptions.
 
+## Clarifications
+
+### Session 2026-10-01
+
+- Q: The design has a required CV file picker, but CV upload is out of scope. What should the CV
+  field do? → A: Keep the designed required picker (choose a file or drag one in, PDF/DOC/DOCX up
+  to 10MB), and record only the file's name and size. No file is uploaded or stored.
+- Q: The design's confirmation says "We've sent a copy to {email}", but no email is ever sent. What
+  should that line say? → A: Replace it with "We'll contact you at {email}."
+- Q: The plan puts the form and the confirmation on separate pages (`/apply` and `/confirmation`).
+  What does a reload show? → A: Reloading the confirmation page shows the most recent saved
+  application again. Opening or reloading the form page always shows the default form, so that
+  "Start again" works.
+- Q: The plan's data shape includes `phone`, but the form has no phone field. Is phone collected?
+  → A: No. The data shape is matched to the form on the page: there is no phone field, and the
+  LinkedIn URL and CV details are added.
+
 ## User Scenarios & Testing *(mandatory)*
 
 ### User Story 1 - Apply for the advertised role (Priority: P1)
@@ -136,9 +153,9 @@ detail.
 
 **Acceptance Scenarios**:
 
-1. **Given** the candidate has sent an application for this role, **When** they reload the page,
-   **Then** the confirmation state for that application appears, showing the same name, role and
-   email.
+1. **Given** the candidate has sent an application and is looking at the confirmation, **When**
+   they reload the page, **Then** the confirmation for that application appears again, showing the
+   same name, role and email.
 2. **Given** the candidate has sent an application and then selects "Start again", **When** they
    send a second application, **Then** both applications are kept. Starting again never deletes an
    application that was already sent.
@@ -198,10 +215,13 @@ detail.
     your public profile."
   - CV: "PDF, DOC or DOCX, up to 10MB."
   - Cover note: no "(optional)" marker on the label, and the counter text "50 to 500 characters."
-- **FR-004**: The CV field MUST [NEEDS CLARIFICATION: The design makes the CV a required field with
-  a file picker, but "CV file upload" is listed as a non-goal. Should the CV field be (A) left out
-  entirely, (B) kept as a required file picker that records only the file's name and size, with no
-  file stored or uploaded, or (C) kept as an optional picker that records only the name and size?]
+- **FR-004**: The CV field MUST be the designed required file picker: "Choose a file" or drag a
+  file in, accepting PDF, DOC or DOCX up to 10MB. Once a file is chosen, it shows the file's name
+  and size and a "Remove" action. Only the file's **name and size** are recorded. The file's
+  contents are never uploaded or stored. A file with another type, or a file over 10MB, MUST be
+  rejected with an inline error in the design's error pattern: "Choose a PDF, DOC or DOCX file." or
+  "That file is over 10MB. Try a smaller one." With no file chosen, the error is "Attach your CV to
+  apply."
 
 **Validation (validating state)**
 
@@ -237,7 +257,7 @@ detail.
   blocked until the attempt finishes.
 - **FR-014**: The system MUST save the application before showing success. The saved application
   holds the role, the trimmed full name, the trimmed email, the trimmed LinkedIn URL or "not
-  provided", the CV details (per FR-004), the trimmed cover note, and the submission time.
+  provided", the CV's file name and size, the trimmed cover note, and the submission time.
 - **FR-015**: When saving succeeds, the form MUST be replaced by the "Application sent"
   confirmation. The confirmation MUST:
   - show the applicant's name (the greeting "Thanks {first name}." uses the first word of the
@@ -246,11 +266,9 @@ detail.
     Engineer (Remote, UK) at Northgate Labs is in.";
   - explain the next steps in the design's wording;
   - offer "Browse other roles" and "Start again".
-- **FR-016**: The confirmation copy MUST be accurate for what the product actually does:
-  [NEEDS CLARIFICATION: The design's confirmation says "We've sent a copy to {email}", but server
-  email is a non-goal, so no copy will be sent. Should that sentence be (A) removed, (B) replaced
-  with an accurate line such as "We'll contact you at {email}", or (C) kept as designed despite
-  being inaccurate?]
+- **FR-016**: The confirmation copy MUST be accurate for what the product actually does. The
+  design's "We've sent a copy to {email}." MUST be replaced with "We'll contact you at {email}."
+  No email is sent.
 - **FR-017**: When saving fails, the system MUST leave the submitting state and show a visible
   error alert in the form, using the design's alert pattern. The alert MUST say that the
   application was not sent and that nothing they entered was lost, and it MUST offer a retry
@@ -264,9 +282,9 @@ detail.
 
 - **FR-020**: Sent applications MUST survive a page reload and a browser restart on the same
   device and browser.
-- **FR-021**: When the page loads and an application for this role has already been sent from this
-  browser, the system MUST show the confirmation state for the most recent one, with its name and
-  role, instead of an empty form.
+- **FR-021**: Reloading or reopening the confirmation MUST show the most recent saved application
+  again, with its name, role and email. If no application has been saved, the candidate MUST be
+  taken to the form instead. Opening the form always shows the default state.
 - **FR-022**: "Start again" MUST return the form to its default state with empty fields and no
   errors. It MUST NOT delete applications that were already sent.
 - **FR-023**: Values that were entered but not sent are NOT kept across a reload.
@@ -298,7 +316,7 @@ detail.
   sections. For this feature the role is fixed content taken from the design.
 - **Application**: one candidate's submission for a role. It has a unique reference, the role it
   is for (title and company, so the confirmation can name it), full name, email, an optional
-  LinkedIn profile URL, CV details (per FR-004), a required cover note of 50–500 characters, and
+  LinkedIn profile URL, CV details (file name and size only), a required cover note of 50–500 characters, and
   when it was sent. It is created once and never edited by this feature.
 - **Form state**: which state the screen is in (default, validating, submitting, success, or
   submit failure), plus the current field values and errors. It is not saved.
