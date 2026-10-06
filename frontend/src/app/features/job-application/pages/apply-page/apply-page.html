@@ -1,0 +1,27 @@
+<hf-role-page-layout [role]="role">
+  <hf-application-form
+    [role]="role"
+    [draft]="draft()"
+    [errors]="errors()"
+    [status]="status()"
+    (fieldChange)="onFieldChange($event)"
+    (cvChange)="onCvChange($event)"
+    (send)="onSend()"
+  >
+    @if (status() === 'failed') {
+      <hf-form-alert
+        formAlert
+        title="We couldn't send your application."
+        body="Nothing you entered has been lost. Please try again in a moment."
+        actionLabel="Try again"
+        (action)="onSend()"
+      />
+    } @else if (showSummary()) {
+      <hf-form-alert
+        formAlert
+        [title]="summaryTitle()"
+        body="Check the highlighted fields below."
+      />
+    }
+  </hf-application-form>
+</hf-role-page-layout>

@@ -1,0 +1,46 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--hf-color-background);
+  color: var(--hf-color-text);
+  font-family: var(--hf-font-family);
+  font-size: var(--hf-type-body-size);
+  line-height: var(--hf-type-body-line-height);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--hf-color-primary);
+}
+
+a:hover {
+  color: var(--hf-color-primary-hover);
+}
+
+a:focus-visible {
+  outline: none;
+  border-radius: var(--hf-radius-control);
+  box-shadow: var(--hf-focus-ring);
+}
+
+.hf-visually-hidden {
+  position: absolute !important;
+  width: var(--hf-size-hairline);
+  height: var(--hf-size-hairline);
+  padding: 0;
+  margin: calc(-1 * var(--hf-size-hairline));
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}

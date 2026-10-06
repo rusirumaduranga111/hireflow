@@ -1,0 +1,38 @@
+@let facts = role().facts;
+<aside hf-card class="facts" aria-label="Role details">
+  <dl class="list">
+    <div class="fact">
+      <dt>Salary</dt>
+      <dd>{{ facts.salary }}</dd>
+    </div>
+    <div class="fact">
+      <dt>Location</dt>
+      <dd>{{ facts.location }}</dd>
+    </div>
+    <div class="fact">
+      <dt>Contract</dt>
+      <dd>{{ facts.contract }}</dd>
+    </div>
+    <div class="fact">
+      <dt>Team</dt>
+      <dd>{{ facts.teamSize }}</dd>
+    </div>
+  </dl>
+
+  <hr class="divider" />
+
+  <dl class="list">
+    <div class="fact">
+      <dt>Applications close</dt>
+      <dd>{{ facts.closes }}</dd>
+    </div>
+  </dl>
+
+  <div class="manager">
+    <span class="avatar" aria-hidden="true">{{ facts.hiringManager.initials }}</span>
+    <div class="manager-text">
+      <span class="manager-name">{{ facts.hiringManager.name }}</span>
+      <span class="manager-title">{{ facts.hiringManager.title }}</span>
+    </div>
+  </div>
+</aside>

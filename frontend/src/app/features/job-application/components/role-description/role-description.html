@@ -1,0 +1,10 @@
+<section class="description" aria-label="About the role">
+  @for (section of sections(); track $index) {
+    @if (section.heading) {
+      <h2 class="heading">{{ section.heading }}</h2>
+    }
+    @for (paragraph of section.paragraphs; track $index) {
+      <p class="paragraph">{{ paragraph }}</p>
+    }
+  }
+</section>

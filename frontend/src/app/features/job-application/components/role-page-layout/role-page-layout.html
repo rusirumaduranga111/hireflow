@@ -1,0 +1,10 @@
+<div class="page">
+  <hf-role-header [role]="role()" />
+  <div class="cols">
+    <hf-role-facts class="facts" [role]="role()" />
+    <div class="main-col">
+      <hf-role-description [sections]="role().description" />
+      <ng-content />
+    </div>
+  </div>
+</div>

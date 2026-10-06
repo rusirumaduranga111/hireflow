@@ -1,0 +1,11 @@
+<div class="alert" role="alert" tabindex="-1">
+  <span class="title">{{ title() }}</span>
+  <span class="body">{{ body() }}</span>
+  @if (actionLabel(); as label) {
+    <div class="action">
+      <button hf-button variant="secondary" size="sm" type="button" (click)="action.emit()">
+        {{ label }}
+      </button>
+    </div>
+  }
+</div>

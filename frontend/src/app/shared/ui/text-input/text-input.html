@@ -1,0 +1,48 @@
+<div class="field">
+  <label class="label" [for]="controlId">
+    {{ label() }}
+    @if (labelSuffix(); as suffix) {
+      <span class="suffix">{{ suffix }}</span>
+    }
+  </label>
+
+  @if (multiline()) {
+    <textarea
+      class="control control--multiline"
+      [class.control--invalid]="!!error()"
+      [id]="controlId"
+      [rows]="rows()"
+      [attr.maxlength]="maxLength()"
+      [placeholder]="placeholder()"
+      [readOnly]="readonly()"
+      [value]="value()"
+      [attr.autocomplete]="autocomplete()"
+      [attr.aria-required]="required() ? 'true' : null"
+      [attr.aria-invalid]="error() ? 'true' : null"
+      [attr.aria-describedby]="messageId"
+      (input)="onInput($event)"
+      (blur)="blurred.emit()"
+    ></textarea>
+  } @else {
+    <input
+      class="control"
+      [class.control--invalid]="!!error()"
+      [id]="controlId"
+      [type]="type()"
+      [attr.maxlength]="maxLength()"
+      [placeholder]="placeholder()"
+      [readOnly]="readonly()"
+      [value]="value()"
+      [attr.autocomplete]="autocomplete()"
+      [attr.aria-required]="required() ? 'true' : null"
+      [attr.aria-invalid]="error() ? 'true' : null"
+      [attr.aria-describedby]="messageId"
+      (input)="onInput($event)"
+      (blur)="blurred.emit()"
+    />
+  }
+
+  <span class="message" [class.message--error]="!!error()" [id]="messageId">
+    {{ error() || hint() }}
+  </span>
+</div>

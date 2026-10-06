@@ -1,0 +1,106 @@
+/*
+ * HireFlow design tokens.
+ * Source of truth: Design/HireFlow Style Sheet.dc.html ("Visual language").
+ * Values marked "page" come from Design/Job Application Page.dc.html
+ * (see specs/001-job-application-form/contracts/design-tokens.md).
+ * This is the only file allowed to contain design literals.
+ */
+:root {
+  /* Colour */
+  --hf-color-primary: #1d4ed8;
+  --hf-color-primary-hover: #1e40af;
+  --hf-color-primary-tint: #eff6ff;
+  --hf-color-on-primary: #ffffff;
+  --hf-color-text: #1c1a17;
+  --hf-color-text-muted: #57534b;
+  --hf-color-text-subtle: #78716a;
+  --hf-color-surface: #ffffff;
+  --hf-color-background: #faf9f7;
+  --hf-color-border: #e7e5e0;
+  --hf-color-border-strong: #d6d3cd;
+  --hf-color-border-hover: #a8a29b;
+  --hf-color-error: #b91c1c;
+  --hf-color-error-tint: #fef2f2;
+
+  /* Focus (indicators, not drop shadows) */
+  --hf-focus-ring: 0 0 0 2px var(--hf-color-surface), 0 0 0 4px var(--hf-color-primary);
+  --hf-focus-halo: inset 0 0 0 1px var(--hf-color-primary), 0 0 0 3px rgb(29 78 216 / 0.32);
+  --hf-focus-halo-error: inset 0 0 0 1px var(--hf-color-error), 0 0 0 3px rgb(185 28 28 / 0.28);
+
+  /* Typography */
+  --hf-font-family: Inter, system-ui, sans-serif;
+  --hf-font-weight-regular: 400;
+  --hf-font-weight-medium: 500;
+  --hf-font-weight-semibold: 600;
+  --hf-font-weight-bold: 700;
+
+  --hf-type-page-title-size: 32px;
+  --hf-type-page-title-line-height: 1.2;
+  --hf-type-page-title-weight: 700;
+  --hf-type-page-title-tracking: -0.02em;
+  --hf-font-size-page-title-compact: 28px;
+  --hf-font-size-display: 40px; /* page: h1 at >= 900px */
+  --hf-line-height-display: 1.15; /* page: h1 line-height */
+
+  --hf-type-section-title-size: 24px;
+  --hf-type-section-title-line-height: 1.33;
+  --hf-type-section-title-weight: 600;
+  --hf-type-section-title-tracking: -0.01em;
+
+  --hf-type-subtitle-size: 18px;
+  --hf-type-subtitle-line-height: 1.55;
+  --hf-type-subtitle-weight: 600;
+
+  --hf-type-body-size: 16px;
+  --hf-type-body-line-height: 1.6;
+  --hf-type-body-weight: 400;
+  --hf-line-height-reading: 1.7; /* page: description paragraphs */
+  --hf-tracking-tight: -0.01em;
+
+  --hf-type-body-small-size: 14px;
+  --hf-type-body-small-line-height: 1.6;
+  --hf-type-body-small-weight: 400;
+
+  --hf-type-label-size: 13px;
+  --hf-type-label-line-height: 1.55;
+  --hf-type-label-weight: 500;
+
+  --hf-type-caption-size: 12px;
+  --hf-type-caption-line-height: 1.5;
+  --hf-type-caption-weight: 400;
+
+  --hf-line-height-control: 1;
+
+  /* Spacing (8px grid, 4px half-step) */
+  --hf-space-0-5: 2px;
+  --hf-space-1: 4px;
+  --hf-space-2: 8px;
+  --hf-space-control-x: 12px;
+  --hf-space-3: 16px;
+  --hf-space-4: 24px;
+  --hf-space-5: 32px;
+  --hf-space-layout-40: 40px; /* page */
+  --hf-space-6: 48px;
+  --hf-space-layout-56: 56px; /* page */
+  --hf-space-7: 64px;
+  --hf-space-layout-80: 80px; /* page */
+
+  /* Shape, size, layout, motion */
+  --hf-radius-control: 6px;
+  --hf-radius-card: 8px;
+  --hf-radius-pill: 9999px;
+  --hf-border-width: 1px;
+  --hf-size-hairline: 1px; /* visually-hidden utility, not a visual value */
+  --hf-border-width-dropzone: 1.5px; /* page */
+  --hf-size-control-sm: 32px;
+  --hf-size-control-md: 40px;
+  --hf-size-control-lg: 48px;
+  --hf-size-avatar: 32px;
+  --hf-size-avatar-lg: 40px;
+  --hf-size-brand-mark: 24px;
+  --hf-size-button-min: 176px; /* page */
+  --hf-size-privacy-basis: 200px; /* page: privacy line flex-basis beside the send button */
+  --hf-layout-max-width: 1040px; /* page */
+  --hf-layout-facts-width: 280px; /* page */
+  --hf-duration-fast: 120ms;
+}

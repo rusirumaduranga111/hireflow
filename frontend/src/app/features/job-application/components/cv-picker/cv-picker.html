@@ -1,0 +1,60 @@
+<div class="field" role="group" [attr.aria-labelledby]="labelId">
+  <span class="label" [id]="labelId">CV</span>
+
+  @if (file(); as chosen) {
+    <div class="chosen" [class.chosen--invalid]="!!error()">
+      <div class="file">
+        <span class="badge" aria-hidden="true">{{ badge() }}</span>
+        <div class="file-text">
+          <span class="file-name">{{ chosen.fileName }}</span>
+          <span class="file-size">{{ sizeLabel() }}</span>
+        </div>
+      </div>
+      <button
+        #removeButton
+        hf-button
+        variant="quiet"
+        size="sm"
+        type="button"
+        [disabled]="disabled()"
+        [attr.aria-label]="'Remove ' + chosen.fileName"
+        [attr.aria-describedby]="messageId"
+        (click)="remove()"
+      >
+        Remove
+      </button>
+    </div>
+  } @else {
+    <button
+      #dropzone
+      type="button"
+      class="dropzone"
+      [class.dropzone--dragging]="dragging()"
+      [class.dropzone--invalid]="!!error()"
+      [disabled]="disabled()"
+      [attr.aria-invalid]="error() ? 'true' : null"
+      [attr.aria-describedby]="messageId"
+      (click)="browse()"
+      (dragover)="onDragOver($event)"
+      (dragleave)="onDragLeave()"
+      (drop)="onDrop($event)"
+    >
+      <span class="choose">Choose a file</span>
+      <span class="drop-hint">or drag it here · PDF, DOC or DOCX up to 10MB</span>
+    </button>
+  }
+
+  <input
+    #fileInput
+    type="file"
+    class="hf-visually-hidden"
+    accept=".pdf,.doc,.docx"
+    tabindex="-1"
+    aria-hidden="true"
+    (change)="onFileSelected($event)"
+  />
+
+  <span class="message" [class.message--error]="!!error()" [id]="messageId">
+    {{ error() || 'PDF, DOC or DOCX, up to 10MB.' }}
+  </span>
+</div>

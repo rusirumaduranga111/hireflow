@@ -1,0 +1,5 @@
+<hf-role-page-layout [role]="role">
+  @if (application(); as app) {
+    <hf-confirmation-card [application]="app" [role]="role" (startAgain)="startAgain()" />
+  }
+</hf-role-page-layout>

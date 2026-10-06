@@ -1,0 +1,42 @@
+.role-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hf-space-2);
+  padding-bottom: var(--hf-space-5);
+}
+
+.eyebrow {
+  font-size: var(--hf-type-label-size);
+  line-height: var(--hf-type-label-line-height);
+  font-weight: var(--hf-type-label-weight);
+  color: var(--hf-color-text-muted);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--hf-type-page-title-size);
+  line-height: var(--hf-line-height-display);
+  font-weight: var(--hf-type-page-title-weight);
+  letter-spacing: var(--hf-type-page-title-tracking);
+  text-wrap: pretty;
+}
+
+.summary {
+  margin: 0;
+  font-size: var(--hf-type-body-size);
+  line-height: var(--hf-type-body-line-height);
+  color: var(--hf-color-text-muted);
+  text-wrap: pretty;
+}
+
+@media (max-width: 420px) {
+  .title {
+    font-size: var(--hf-font-size-page-title-compact);
+  }
+}
+
+@media (min-width: 900px) {
+  .title {
+    font-size: var(--hf-font-size-display);
+  }
+}

@@ -1,0 +1,93 @@
+<section hf-card class="form-card" aria-labelledby="apply-heading">
+  <div class="intro">
+    <h2 id="apply-heading" class="title">Apply for this role</h2>
+    <p class="lede">Takes about five minutes. We reply to every application.</p>
+  </div>
+
+  <ng-content select="[formAlert]" />
+
+  <form class="form" novalidate (submit)="onSubmit($event)">
+    <div class="pair">
+      <hf-text-input
+        label="Full name"
+        autocomplete="name"
+        placeholder="Ravi Shah"
+        hint="As it appears on your CV."
+        [required]="true"
+        [value]="draft().fullName"
+        [error]="errors().fullName"
+        [readonly]="busy()"
+        (valueChange)="change('fullName', $event)"
+      />
+      <hf-text-input
+        label="Email"
+        type="email"
+        autocomplete="email"
+        placeholder="name@company.com"
+        hint="We'll only use this about your application."
+        [required]="true"
+        [value]="draft().email"
+        [error]="errors().email"
+        [readonly]="busy()"
+        (valueChange)="change('email', $event)"
+      />
+    </div>
+
+    <hf-text-input
+      label="LinkedIn profile URL"
+      labelSuffix="(optional)"
+      type="url"
+      autocomplete="url"
+      placeholder="https://www.linkedin.com/in/your-name"
+      hint="Paste the link to your public profile."
+      [value]="draft().linkedInUrl"
+      [error]="errors().linkedInUrl"
+      [readonly]="busy()"
+      (valueChange)="change('linkedInUrl', $event)"
+    />
+
+    <hf-cv-picker
+      [file]="draft().cv"
+      [error]="errors().cv"
+      [disabled]="busy()"
+      (fileChosen)="cvChange.emit($event)"
+      (removed)="cvChange.emit(null)"
+    />
+
+    <hf-text-input
+      label="Cover note"
+      [multiline]="true"
+      [rows]="5"
+      [maxLength]="coverNoteMax"
+      [placeholder]="
+        'Anything you\'d like ' + hiringManagerFirstName() + ' to know before reading your CV.'
+      "
+      [hint]="coverNoteCount()"
+      [required]="true"
+      [value]="draft().coverNote"
+      [error]="errors().coverNote"
+      [readonly]="busy()"
+      (valueChange)="change('coverNote', $event)"
+    />
+
+    <div class="actions">
+      <button hf-button size="lg" type="submit" class="send" [busy]="busy()">
+        @if (busy()) {
+          Sending…
+        } @else {
+          Send application
+        }
+      </button>
+      <p class="privacy">
+        Your details go to {{ role().company }} only. We delete applications six months after the
+        role closes.
+      </p>
+    </div>
+
+    <p class="hf-visually-hidden" aria-live="polite">
+      @if (busy()) {
+        Sending your application…
+      }
+    </p>
+  </form>
+</section>

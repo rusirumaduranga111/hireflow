@@ -1,0 +1,19 @@
+.description {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hf-space-3);
+}
+
+.heading {
+  margin: var(--hf-space-2) 0 0;
+  font-size: var(--hf-type-subtitle-size);
+  line-height: var(--hf-type-subtitle-line-height);
+  font-weight: var(--hf-type-subtitle-weight);
+}
+
+.paragraph {
+  margin: 0;
+  font-size: var(--hf-type-body-size);
+  line-height: var(--hf-line-height-reading);
+  text-wrap: pretty;
+}

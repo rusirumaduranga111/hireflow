@@ -1,0 +1,18 @@
+# Dependencies and build output
+node_modules/
+dist/
+build/
+coverage/
+.angular/
+
+# Logs and env
+*.log
+.env*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
+.vscode/
+.idea/

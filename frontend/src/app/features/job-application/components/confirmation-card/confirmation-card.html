@@ -1,0 +1,17 @@
+@let app = application();
+<section hf-card [emphasis]="true" class="confirmation" aria-labelledby="confirmation-heading">
+  <span class="badge" aria-hidden="true">✓</span>
+  <h2 #heading id="confirmation-heading" class="title" tabindex="-1">Application sent</h2>
+  <p class="body">
+    Thanks {{ firstName() }}. Your application for {{ app.jobTitle }} at {{ app.company }} is in.
+    {{ hiringManagerFirstName() }} and the {{ role().team }} team review applications every
+    Thursday, and you'll hear from us either way by {{ role().responseBy }}. We'll contact you at
+    {{ app.email }}.
+  </p>
+  <div class="actions">
+    <a hf-button routerLink="/roles">Browse other roles</a>
+    <button hf-button variant="secondary" type="button" (click)="startAgain.emit()">
+      Start again
+    </button>
+  </div>
+</section>

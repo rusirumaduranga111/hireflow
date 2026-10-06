@@ -49,7 +49,10 @@ These are focus indicators, not drop shadows, so the "no heavy drop-shadows" rul
 | `--hf-type-body-small-*` | 14px / 1.6 / 400 | Intro line, alerts, file name |
 | `--hf-type-label-*` | 13px / 1.55 / 500 | Labels; small button text |
 | `--hf-type-caption-*` | 12px / 1.5 / 400 | Helper and error text, fact labels, privacy line, footer |
-| `--hf-font-weight-semibold` and `--hf-font-weight-bold` | 600 / 700 | emphasis |
+| `--hf-font-weight-regular` / `-medium` / `-semibold` / `-bold` | 400 / 500 / 600 / 700 | weights used in the style sheet |
+| `--hf-line-height-display` **page** | 1.15 | h1 line-height (design line 48) |
+| `--hf-line-height-control` | 1 | Single-line inputs and buttons (style sheet `font: … /1`) |
+| `--hf-tracking-tight` | -0.01em | Brand name in the header (style sheet header) |
 
 ## Spacing (8px grid)
 
@@ -80,6 +83,9 @@ These are focus indicators, not drop shadows, so the "no heavy drop-shadows" rul
 | `--hf-size-control-sm` / `-md` / `-lg` | 32px / 40px / 48px (48px is the touch minimum; form controls use lg) |
 | `--hf-size-avatar` / `-lg` | 32px / 40px |
 | `--hf-size-button-min` **page** | 176px (minimum width of "Send application", design line 156) |
+| `--hf-size-privacy-basis` **page** | 200px (flex-basis of the privacy line beside the button, design line 157) |
+| `--hf-size-brand-mark` | 24px (header brand square, style sheet header) |
+| `--hf-size-hairline` | 1px (visually-hidden utility only; not a visual value) |
 | `--hf-layout-max-width` **page** | 1040px |
 | `--hf-layout-facts-width` **page** | 280px |
 | `--hf-duration-fast` | 120ms |

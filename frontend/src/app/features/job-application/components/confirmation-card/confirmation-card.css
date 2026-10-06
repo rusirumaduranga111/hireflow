@@ -1,0 +1,53 @@
+.confirmation {
+  display: flex;
+  flex-direction: column;
+  gap: var(--hf-space-3);
+  padding: var(--hf-space-5);
+}
+
+.badge {
+  width: var(--hf-size-avatar-lg);
+  height: var(--hf-size-avatar-lg);
+  border-radius: var(--hf-radius-pill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--hf-color-primary-tint);
+  color: var(--hf-color-primary);
+  font-size: var(--hf-type-subtitle-size);
+  font-weight: var(--hf-font-weight-bold);
+}
+
+.title {
+  margin: 0;
+  font-size: var(--hf-type-section-title-size);
+  line-height: var(--hf-type-section-title-line-height);
+  font-weight: var(--hf-type-section-title-weight);
+  letter-spacing: var(--hf-type-section-title-tracking);
+}
+
+/* Programmatic focus target on arrival; not interactive, so no ring. */
+.title:focus {
+  outline: none;
+}
+
+.body {
+  margin: 0;
+  font-size: var(--hf-type-body-size);
+  line-height: var(--hf-line-height-reading);
+  color: var(--hf-color-text-muted);
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--hf-space-2);
+}
+
+@media (max-width: 420px) {
+  .confirmation {
+    padding: var(--hf-space-3);
+  }
+}

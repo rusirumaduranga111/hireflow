@@ -1,0 +1,29 @@
+.site-footer {
+  background: var(--hf-color-surface);
+  border-top: var(--hf-border-width) solid var(--hf-color-border);
+}
+
+.inner {
+  max-width: var(--hf-layout-max-width);
+  margin: 0 auto;
+  padding: var(--hf-space-4);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--hf-space-2) var(--hf-space-4);
+  font-size: var(--hf-type-caption-size);
+  line-height: var(--hf-type-caption-line-height);
+}
+
+.powered {
+  color: var(--hf-color-text-subtle);
+}
+
+.links {
+  display: flex;
+  gap: var(--hf-space-3);
+}
+
+.links a {
+  text-decoration: none;
+}

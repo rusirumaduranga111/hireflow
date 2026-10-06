@@ -1,0 +1,18 @@
+:host {
+  display: block;
+  min-width: 0;
+  padding: var(--hf-space-4);
+  border: var(--hf-border-width) solid var(--hf-color-border);
+  border-radius: var(--hf-radius-card);
+  background: var(--hf-color-surface);
+}
+
+:host(.hf-card--emphasis) {
+  border-color: var(--hf-color-primary);
+}
+
+@media (max-width: 420px) {
+  :host {
+    padding: var(--hf-space-3);
+  }
+}

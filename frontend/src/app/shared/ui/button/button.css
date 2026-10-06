@@ -1,0 +1,94 @@
+:host {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--hf-space-2);
+  height: var(--hf-size-control-md);
+  padding: 0 var(--hf-space-3);
+  border: var(--hf-border-width) solid transparent;
+  border-radius: var(--hf-radius-control);
+  font-family: var(--hf-font-family);
+  font-size: var(--hf-type-body-small-size);
+  font-weight: var(--hf-font-weight-semibold);
+  line-height: var(--hf-line-height-control);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color var(--hf-duration-fast),
+    border-color var(--hf-duration-fast);
+}
+
+:host(:focus-visible) {
+  outline: none;
+  box-shadow: var(--hf-focus-ring);
+}
+
+/* Sizes */
+:host(.hf-button--sm) {
+  height: var(--hf-size-control-sm);
+  padding: 0 var(--hf-space-control-x);
+  font-size: var(--hf-type-label-size);
+}
+
+:host(.hf-button--lg) {
+  height: var(--hf-size-control-lg);
+  padding: 0 var(--hf-space-4);
+  font-size: var(--hf-type-body-size);
+}
+
+:host(.hf-button--full) {
+  width: 100%;
+}
+
+/* Primary */
+:host(.hf-button--primary),
+:host(.hf-button--primary:hover) {
+  color: var(--hf-color-on-primary);
+}
+
+:host(.hf-button--primary) {
+  background: var(--hf-color-primary);
+  border-color: var(--hf-color-primary);
+}
+
+:host(.hf-button--primary:hover:not(.hf-button--busy)) {
+  background: var(--hf-color-primary-hover);
+  border-color: var(--hf-color-primary-hover);
+}
+
+/* Secondary */
+:host(.hf-button--secondary),
+:host(.hf-button--secondary:hover) {
+  color: var(--hf-color-text);
+}
+
+:host(.hf-button--secondary) {
+  background: var(--hf-color-surface);
+  border-color: var(--hf-color-border-strong);
+}
+
+:host(.hf-button--secondary:hover:not(.hf-button--busy)) {
+  background: var(--hf-color-background);
+  border-color: var(--hf-color-border-hover);
+}
+
+/* Quiet */
+:host(.hf-button--quiet),
+:host(.hf-button--quiet:hover) {
+  color: var(--hf-color-primary);
+}
+
+:host(.hf-button--quiet) {
+  padding: 0 var(--hf-space-control-x);
+  background: transparent;
+}
+
+:host(.hf-button--quiet:hover:not(.hf-button--busy)) {
+  background: var(--hf-color-primary-tint);
+}
+
+/* Busy (submitting): keeps its colours, signals progress */
+:host(.hf-button--busy) {
+  cursor: progress;
+}
